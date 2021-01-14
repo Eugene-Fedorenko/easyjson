@@ -299,7 +299,7 @@ func (g *Generator) genTypeDecoderNoCheck(t reflect.Type, out string, tags field
 		fmt.Fprintln(g.out, ws+"}")
 
 	case reflect.Interface:
-		if t.NumMethod() != 0 {
+		/*if t.NumMethod() != 0 {
 			if g.interfaceIsEasyjsonUnmarshaller(t) {
 				fmt.Fprintln(g.out, ws+out+".UnmarshalEasyJSON(in)")
 			} else if g.interfaceIsJsonUnmarshaller(t) {
@@ -307,7 +307,7 @@ func (g *Generator) genTypeDecoderNoCheck(t reflect.Type, out string, tags field
 			} else {
 				return fmt.Errorf("interface type %v not supported: only interface{} and easyjson/json Unmarshaler are allowed", t)
 			}
-		} else {
+		} else {*/
 			fmt.Fprintln(g.out, ws+"if m, ok := "+out+".(easyjson.Unmarshaler); ok {")
 			fmt.Fprintln(g.out, ws+"m.UnmarshalEasyJSON(in)")
 			fmt.Fprintln(g.out, ws+"} else if m, ok := "+out+".(json.Unmarshaler); ok {")
@@ -315,7 +315,7 @@ func (g *Generator) genTypeDecoderNoCheck(t reflect.Type, out string, tags field
 			fmt.Fprintln(g.out, ws+"} else {")
 			fmt.Fprintln(g.out, ws+"  "+out+" = in.Interface()")
 			fmt.Fprintln(g.out, ws+"}")
-		}
+		//}
 	default:
 		return fmt.Errorf("don't know how to decode %v", t)
 	}
